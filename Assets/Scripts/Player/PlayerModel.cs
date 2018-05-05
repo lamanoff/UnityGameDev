@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class PlayerModel : Creature
 {
-    public event Action OnStateChanged;               // Событие, что изменились показатели игрока, чтобы обновить HUD
+    public event Action OnStateChanged;
     public float MaxArmor { get; private set; }
     //public string Nickname { get; private set; }
     private float armor;
     private PlayerController playerController;
-    public float Armor                              // Свойство, обрабатывающее изменение брони
+    public float Armor
     {
         get => armor;
         private set
         {
-            OnStateChanged?.Invoke();                 // Вызываем событие, что что-то изменилось (нужно для интерфейса)
+            OnStateChanged?.Invoke();
             if (value < 0)
                 armor = 0;
             else if (value > MaxArmor)
@@ -26,16 +26,15 @@ public class PlayerModel : Creature
     }
 
     public PlayerModel(GameObject playerInstance, int level = 1)
-        : base(playerInstance, level)   // Вызываем конструктор базового класса Creature
+        : base(playerInstance, level)
     {
         //Nickname = nickname;
         MaxArmor = MaxHealth / 4 * level;
         Armor = 0;
-        playerController = CreatureInstance.GetComponent<PlayerController>();       // Находим класс контроллер игрока
+        playerController = CreatureInstance.GetComponent<PlayerController>();
         playerController.GetDamage += GetDamage;
         playerController.GetHealth += GetHealth;
         playerController.GetArmor += GetArmor;
-        // Подписываемся на события хила, дамага, брони
     }
 
     public void LevelUp()
@@ -47,9 +46,9 @@ public class PlayerModel : Creature
         OnStateChanged?.Invoke();
     }
 
-    private void GetDamage(float damage)                        // Уменьшаем броню, если есть, и хелсу (тут some shit magic), нужно хорошо это затестить
+    private void GetDamage(float damage)
     {
-        if (State == CreatureState.Dead)                        // Если уже мертвы, возносимся к исключению
+        if (State == CreatureState.Dead)
             throw new Exception("Player is already dead!");
         var residualDamage = damage - Armor;
         Armor -= damage;

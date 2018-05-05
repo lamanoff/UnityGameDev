@@ -14,8 +14,8 @@ public class EnemyModel : Creature
     private Canvas enemyCanvas;
     private GameModel gameModel;
 
-    protected override void Dead()      // Переписываем метод смерти базового класса Creature, 
-    {                                   // т.к. нам нужно вызвать событие OnDeath, чтобы удалить класс модели этого врага
+    protected override void Dead()
+    {
         try
         {
             Drop();
@@ -47,7 +47,7 @@ public class EnemyModel : Creature
         : base(enemyInstance, level)
     {
         Id = id;
-        var enemyController = CreatureInstance.GetComponent<EnemyController>();     // Находим класс контроллер врага
+        var enemyController = CreatureInstance.GetComponent<EnemyController>();
         enemyController.GetDamage += GetDamage;
         enemyController.Damage = level * 5;
         healthBar = CreatureInstance.GetComponentInChildren<Image>();
