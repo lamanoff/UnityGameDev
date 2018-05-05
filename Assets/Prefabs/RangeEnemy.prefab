@@ -364,7 +364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed51e0fe5844f784f87b1081927dc7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 1
   DamageDeviationRatio: 5
   HitsPerSecond: 1
 --- !u!114 &114532683685122268
@@ -405,7 +404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d29294459be82240b30c6124dee6d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bullet: {fileID: 1371576407139546, guid: 44f0d31db4f5aa04a8ec7aef716b15c7, type: 2}
+  Bullet: {fileID: 1000011499554210, guid: 6a210178cb5ff3f4895e916ee0572669, type: 2}
   Range: 10
   Lifetime: 10
 --- !u!195 &195004799456735106
