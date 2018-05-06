@@ -81,7 +81,7 @@ class EnemyController : MonoBehaviour
             }
             else
             {
-                agent.speed = Mathf.Lerp(agent.speed, 0, 0.05f);
+                agent.speed = Mathf.Lerp(agent.speed, 0, 0.03f);
                 gameObject.transform.LookAt(target.transform);
                 allowAttack = true;
             }
