@@ -17,7 +17,7 @@ public class RangeAttack : MonoBehaviour
             throw new NullReferenceException("The projectile was not installed!");
         var instance = Instantiate(Bullet, transform, false);
         instance.GetComponent<MagicHandler>().Damage = Damage;
-        var velocityRatio = gameObject.GetComponent<NavMeshAgent>().speed;
+        var velocityRatio = gameObject.GetComponent<EnemyController>().Velocity;
         instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * 100 * velocityRatio, ForceMode.Acceleration);
         instance.transform.SetParent(transform.parent, true);
         instance.transform.localScale = Bullet.transform.localScale;
