@@ -15,6 +15,7 @@ class EnemyController : MonoBehaviour
     public float Damage { get; set; }
     public float DamageDeviationRatio = 5;
     public float HitsPerSecond = 1;
+    public float Velocity = 5;
 
     void Start()
     {
@@ -41,6 +42,18 @@ class EnemyController : MonoBehaviour
             allowAttack = false;
     }
 
+    private bool InSight()
+    {
+        var direction = target.transform.position - transform.position;
+        Debug.DrawRay(transform.position, direction, Color.red);
+        if (Physics.Raycast(transform.position, direction, out RaycastHit shootHit))
+        {
+            var collider = shootHit.collider;
+            return collider != null && collider.CompareTag(target.tag);
+        }
+        return false;
+    }
+
     private void Attack()
     {
         if (attackTimer > 0)
@@ -61,17 +74,15 @@ class EnemyController : MonoBehaviour
         else
         {
             var distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
-            if (distanceToTarget > rangeAttack.Range)
+            if (distanceToTarget > rangeAttack.Range || !InSight())
             {
-                if (agent.enabled == false)
-                    agent.enabled = true;
+                agent.speed = Mathf.Lerp(agent.speed, Velocity, 1f);
                 agent.SetDestination(target.transform.position);
                 allowAttack = false;
             }
             else
             {
-                if (agent.enabled == true)
-                    agent.enabled = false;
+                agent.speed = Mathf.Lerp(agent.speed, 0, 0.05f);
                 gameObject.transform.LookAt(target.transform);
                 allowAttack = true;
             }
