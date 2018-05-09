@@ -2,25 +2,28 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private Transform target;
-    public float smoothing = 5f;
+    private Transform Target;
+    public float Smoothing = 5f;
+    public float Distance = 10f;
 
     Vector3 offset;
 
     private void FindTarget()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-        offset = transform.position - target.position;
+        Target = GameObject.FindGameObjectWithTag("Player").transform;
+        offset = transform.position - Target.position;
+        offset.Normalize();
+        offset *= Distance;
     }
 
     void FixedUpdate()
     {
-        if (target == null)
+        if (Target == null)
         {
             FindTarget();
             return;
         }
-        var targetCamPos = target.position + offset;
-        transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
+        var targetCamPos = Target.position + offset;
+        transform.position = Vector3.Lerp(transform.position, targetCamPos, Smoothing * Time.deltaTime);
     }
 }
