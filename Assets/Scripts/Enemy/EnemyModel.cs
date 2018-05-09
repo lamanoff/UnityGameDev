@@ -37,7 +37,7 @@ public class EnemyModel : Creature
             var dropIndex = UnityEngine.Random.Range(0, gameModel.AvailableDrop.Count);
             var dropItem = gameModel.AvailableDrop[dropIndex];
             dropItem.GetComponent<Drop>().Points = Level * 5;
-            var instance = Instantiate(dropItem, CreatureInstance.transform, false);
+            var instance = UnityEngine.Object.Instantiate(dropItem, CreatureInstance.transform, false);
             instance.transform.SetParent(CreatureInstance.transform.parent, true);
             instance.transform.localScale = dropItem.transform.localScale;
         }

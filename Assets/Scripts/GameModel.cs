@@ -35,20 +35,17 @@ public class GameModel : MonoBehaviour
         var player = GameObject.FindGameObjectWithTag("Player");
         MainPlayer = new PlayerModel(player);
         MainPlayer.OnStateChanged += StopGame;
+
+        spawners = GameObject.FindGameObjectsWithTag("Spawner");
+        foreach (var spawner in spawners)
+            spawner.GetComponent<Spawner>().OnSpawn += AddEnemy;
+        CheckForUpLevel();
     }
 
     private void StopGame()
     {
         if (MainPlayer.State == CreatureState.Dead)
             Debug.Log("Game over!");
-    }
-
-    private void Start()
-    {
-        spawners = GameObject.FindGameObjectsWithTag("Spawner");
-        foreach (var spawner in spawners)
-            spawner.GetComponent<Spawner>().OnSpawn += AddEnemy;
-        CheckForUpLevel();
     }
 
     private void ClearEnemy(int id)

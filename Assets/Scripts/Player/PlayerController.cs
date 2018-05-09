@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Shooting))]
 public class PlayerController : MonoBehaviour
 {
     public float Velocity;
@@ -28,16 +30,16 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(Vector3 enemyPos, float damage)
     {
-        GetDamage(damage);
+        GetDamage?.Invoke(damage);
         var force = transform.position - enemyPos;
         playerRigidbody.AddForce(force * damage * 10 / gameModel.MainPlayer.Level, ForceMode.VelocityChange);
     }
 
     public void TakeHealth(float health)
-        => GetHealth(health);
+        => GetHealth?.Invoke(health);
 
     public void TakeArmor(float armor)
-        => GetArmor(armor);
+        => GetArmor?.Invoke(armor);
 
     void FixedUpdate()
     {
