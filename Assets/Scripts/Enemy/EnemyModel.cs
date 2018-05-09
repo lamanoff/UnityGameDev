@@ -53,7 +53,11 @@ public class EnemyModel : Creature
         healthBar = CreatureInstance.GetComponentInChildren<Image>();
         enemyCanvas = CreatureInstance.GetComponentInChildren<Canvas>();
         gameModel = GameObject.Find("GameModel").GetComponent<GameModel>();
-        enemyCanvas.GetComponentInChildren<Text>().text = $"Lvl.{Level}";
+        try
+        {
+            enemyCanvas.GetComponentInChildren<Text>().text = $"Lvl.{Level}";
+        }
+        catch { }
     }
 
     private void GetDamage(float damage)
