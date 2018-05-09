@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.AI;
 using System;
 
-class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     private GameObject target;
     private PlayerController playerController;

@@ -37,7 +37,7 @@ public class EnemyModel : Creature
             var dropIndex = UnityEngine.Random.Range(0, gameModel.AvailableDrop.Count);
             var dropItem = gameModel.AvailableDrop[dropIndex];
             dropItem.GetComponent<Drop>().Points = Level * 5;
-            var instance = Instantiate(dropItem, CreatureInstance.transform, false);
+            var instance = UnityEngine.Object.Instantiate(dropItem, CreatureInstance.transform, false);
             instance.transform.SetParent(CreatureInstance.transform.parent, true);
             instance.transform.localScale = dropItem.transform.localScale;
         }
@@ -53,7 +53,11 @@ public class EnemyModel : Creature
         healthBar = CreatureInstance.GetComponentInChildren<Image>();
         enemyCanvas = CreatureInstance.GetComponentInChildren<Canvas>();
         gameModel = GameObject.Find("GameModel").GetComponent<GameModel>();
-        enemyCanvas.GetComponentInChildren<Text>().text = $"Lvl.{Level}";
+        try
+        {
+            enemyCanvas.GetComponentInChildren<Text>().text = $"Lvl.{Level}";
+        }
+        catch { }
     }
 
     private void GetDamage(float damage)

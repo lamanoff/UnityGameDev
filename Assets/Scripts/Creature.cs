@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Creature : MonoBehaviour
+public class Creature
 {
     public float MaxHealth { get; protected set; }
     public CreatureState State { get; protected set; }
@@ -38,7 +38,7 @@ public class Creature : MonoBehaviour
     }
 
     protected virtual void Dead()
-        => Destroy(CreatureInstance);
+        => UnityEngine.Object.Destroy(CreatureInstance);
 
     public Creature(GameObject creatureInstance, int level = 1)
     {
