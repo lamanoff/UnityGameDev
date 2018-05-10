@@ -8,6 +8,9 @@ TagManager:
   - Enemy
   - Spawner
   - Drop
+  - Armor
+  - HP
+  - Bullet
   layers:
   - Default
   - TransparentFX

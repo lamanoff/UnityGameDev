@@ -11,6 +11,8 @@ public class EnemyController : MonoBehaviour
     private bool allowAttack = false;
     private float attackTimer;
     private RangeAttack rangeAttack;
+    [SerializeField]
+    private GameObject raycaster;
     public event Action<float> GetDamage;
     public float Damage { get; set; }
     public float DamageDeviationRatio = 5;
@@ -44,8 +46,8 @@ public class EnemyController : MonoBehaviour
 
     private bool InSight()
     {
-        var direction = target.transform.position - transform.position;
-        if (Physics.Raycast(transform.position, direction, out RaycastHit shootHit))
+        var direction = target.transform.position - raycaster.transform.position;
+        if (Physics.Raycast(raycaster.transform.position, direction, out RaycastHit shootHit))
         {
             var collider = shootHit.collider;
             return collider != null && collider.CompareTag(target.tag);

@@ -19,7 +19,7 @@ public class MagicHandler : MonoBehaviour
             playerController.TakeDamage(transform.position, Damage);
             Destroy(gameObject);
         }
-        else if (!other.CompareTag("Enemy") && !other.CompareTag("Drop"))
+        else if (!other.CompareTag("Enemy") && !other.CompareTag("Drop") && !other.CompareTag("Bullet"))
             Destroy(gameObject);
     }
 }

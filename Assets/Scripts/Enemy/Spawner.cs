@@ -8,16 +8,9 @@ public class Spawner : MonoBehaviour
     public Vector2 LevelsRange = new Vector2(1, 5);
     public event Action<GameObject, int> OnSpawn;
 
-    void OnTriggerEnter(Collider other)
+    void Start()
     {
-        if (other.CompareTag("Player"))
-            InvokeRepeating("Spawning", SpawnTime, SpawnTime);
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-            CancelInvoke("Spawning");
+        InvokeRepeating("Spawning", SpawnTime, SpawnTime);
     }
 
     void Spawning()

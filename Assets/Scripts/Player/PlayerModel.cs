@@ -7,7 +7,6 @@ public class PlayerModel : Creature
 {
     public event Action OnStateChanged;
     public float MaxArmor { get; private set; }
-    //public string Nickname { get; private set; }
     private float armor;
     private PlayerController playerController;
     public float Armor
@@ -28,7 +27,6 @@ public class PlayerModel : Creature
     public PlayerModel(GameObject playerInstance, int level = 1)
         : base(playerInstance, level)
     {
-        //Nickname = nickname;
         MaxArmor = MaxHealth / 4 * level;
         Armor = 0;
         playerController = CreatureInstance.GetComponent<PlayerController>();
@@ -43,6 +41,7 @@ public class PlayerModel : Creature
         MaxArmor = MaxHealth / 4 * Level;
         MaxHealth = Level * 50;
         playerController.Regeneration = MaxHealth / 180;
+        playerController.UpLevel();
         OnStateChanged?.Invoke();
     }
 

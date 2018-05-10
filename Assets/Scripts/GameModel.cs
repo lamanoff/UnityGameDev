@@ -62,8 +62,18 @@ public class GameModel : MonoBehaviour
         {
             LastExpMargin = ExpToLevelUp;
             MainPlayer.LevelUp();
+            UpSpawnersLevel();
         }
         ExpToLevelUp = (float)(5 * Math.Pow(MainPlayer.Level, 2));
+    }
+
+    private void UpSpawnersLevel()
+    {
+        foreach(var obj in spawners)
+        {
+            var spawner = obj.GetComponent<Spawner>();
+            spawner.LevelsRange += new Vector2(1, 1);
+        }
     }
 
     private void AddEnemy(GameObject instance, int level)

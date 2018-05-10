@@ -11,7 +11,10 @@ public class PlayerController : MonoBehaviour
     public event Action<float> GetArmor;
     public bool AllowShooting { get; private set; }
     public float Regeneration = 0.1f;
+    public GameObject lvlupEffect;
+    public float LvlupTime = 3f;
 
+    private float lvlupTimer;
     private Rigidbody playerRigidbody;
     private int floorMask;
     private float camRayLength = 100f;
@@ -28,11 +31,13 @@ public class PlayerController : MonoBehaviour
         gameModel = GameObject.Find("GameModel").GetComponent<GameModel>();
     }
 
+    public void UpLevel() => lvlupTimer = LvlupTime;
+
     public void TakeDamage(Vector3 enemyPos, float damage)
     {
         GetDamage?.Invoke(damage);
         var force = transform.position - enemyPos;
-        playerRigidbody.AddForce(force * damage * 10 / gameModel.MainPlayer.Level, ForceMode.VelocityChange);
+        //playerRigidbody.AddForce(force * damage * 10 / gameModel.MainPlayer.Level, ForceMode.VelocityChange);
     }
 
     public void TakeHealth(float health)
@@ -43,6 +48,17 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (lvlupTimer > 0)
+        {
+            lvlupTimer -= Time.deltaTime;
+            if (!lvlupEffect.activeInHierarchy)
+                lvlupEffect.SetActive(true);
+        }
+        else
+        {
+            if (lvlupEffect.activeInHierarchy)
+                lvlupEffect.SetActive(false);
+        }
         TakeHealth(Regeneration / 100);
         Move();
         LookAtCursor();
