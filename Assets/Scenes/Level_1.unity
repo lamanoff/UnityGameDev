@@ -4660,6 +4660,16 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 224321994538263168, guid: 6c3da38f3d7da414ead33a8c769ca147,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114558448821300390, guid: 6c3da38f3d7da414ead33a8c769ca147,
+        type: 2}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6c3da38f3d7da414ead33a8c769ca147, type: 2}
   m_IsPrefabParent: 0
