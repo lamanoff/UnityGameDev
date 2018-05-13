@@ -6,11 +6,8 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public void LoadByIndex(int index)
-    {
-        Debug.Log("Load");
-        SceneManager.LoadScene(index);
-        Debug.Log("Loaded");
-    }
+        => SceneManager.LoadScene(index);
+
 
     public void Quit()
     {
