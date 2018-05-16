@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     private bool allowAttack = false;
     private float attackTimer;
     private RangeAttack rangeAttack;
+    private Animator animator;
     [SerializeField]
     private GameObject raycaster;
     public event Action<float> GetDamage;
@@ -25,6 +26,9 @@ public class EnemyController : MonoBehaviour
         playerController = target.GetComponent<PlayerController>();
         agent = GetComponent<NavMeshAgent>();
         rangeAttack = GetComponent<RangeAttack>();
+        animator = GetComponent<Animator>();
+        if (rangeAttack == null)
+            animator.SetBool("Walk", true);
         if (rangeAttack != null)
             rangeAttack.Damage = Damage;
     }
@@ -62,7 +66,7 @@ public class EnemyController : MonoBehaviour
         var currentDeviation = Damage / DamageDeviationRatio;
         var damage = Damage + UnityEngine.Random.Range(-currentDeviation, currentDeviation);
         if (rangeAttack == null)
-            playerController.TakeDamage(transform.position, damage);
+            playerController.TakeDamage(damage);
         else
             rangeAttack.Attack();
         attackTimer = 1 / HitsPerSecond;
@@ -70,7 +74,7 @@ public class EnemyController : MonoBehaviour
 
     private void SetDestination()
     {
-        if (rangeAttack == null)
+        if (rangeAttack == null) 
             agent.SetDestination(target.transform.position);
         else
         {
@@ -79,12 +83,14 @@ public class EnemyController : MonoBehaviour
             {
                 agent.speed = Mathf.Lerp(agent.speed, Velocity, 1f);
                 agent.SetDestination(target.transform.position);
+                animator.SetBool("Walk", true);
                 allowAttack = false;
             }
             else
             {
                 agent.speed = Mathf.Lerp(agent.speed, 0, 0.03f);
                 gameObject.transform.LookAt(target.transform);
+                animator.SetBool("Walk", false);
                 allowAttack = true;
             }
         }
@@ -97,7 +103,12 @@ public class EnemyController : MonoBehaviour
         if (target == null)
             return;
         if (allowAttack)
+        {
+            animator.SetBool("Attack", true);
             Attack();
+        }
+        else
+            animator.SetBool("Attack", false);
         SetDestination();
     }
 }

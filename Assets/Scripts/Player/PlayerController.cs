@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public GameObject lvlupEffect;
     public float LvlupTime = 3f;
 
+    private AudioSource stepSound;
+    private AudioSource hurtSound;
     private float lvlupTimer;
     private Rigidbody playerRigidbody;
     private int floorMask;
@@ -25,19 +27,21 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         AllowShooting = false;
+        stepSound = GetComponents<AudioSource>()[0];
+        hurtSound = GetComponents<AudioSource>()[1];
         floorMask = LayerMask.GetMask("Terrain");
         playerRigidbody = GetComponent<Rigidbody>();
         playerShooting = GetComponent<Shooting>();
         gameModel = GameObject.Find("GameModel").GetComponent<GameModel>();
     }
 
-    public void UpLevel() => lvlupTimer = LvlupTime;
+    public void UpLevel() 
+        => lvlupTimer = LvlupTime;
 
-    public void TakeDamage(Vector3 enemyPos, float damage)
+    public void TakeDamage(float damage)
     {
+        hurtSound.Play();
         GetDamage?.Invoke(damage);
-        var force = transform.position - enemyPos;
-        //playerRigidbody.AddForce(force * damage * 10 / gameModel.MainPlayer.Level, ForceMode.VelocityChange);
     }
 
     public void TakeHealth(float health)
@@ -84,7 +88,12 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         movement.Set(horizontal, 0, vertical);
         movement = movement.normalized * Velocity * Time.deltaTime;
-        playerRigidbody.MovePosition(transform.position + movement);  
+        playerRigidbody.MovePosition(transform.position + movement);
+        if (horizontal * horizontal + vertical * vertical != 0)
+        {
+            if (!stepSound.isPlaying)
+                stepSound.Play();
+        }
     }
 
     private void LookAtCursor()

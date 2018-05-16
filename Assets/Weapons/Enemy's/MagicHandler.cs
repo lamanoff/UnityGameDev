@@ -16,7 +16,7 @@ public class MagicHandler : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerController.TakeDamage(transform.position, Damage);
+            playerController.TakeDamage(Damage);
             Destroy(gameObject);
         }
         else if (!other.CompareTag("Enemy") && !other.CompareTag("Drop") && !other.CompareTag("Bullet"))

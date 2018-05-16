@@ -25,7 +25,7 @@ public class PlayerModelTests
         var expected = oldValue / 2;
         try
         {
-            playerController.TakeDamage(Vector3.zero, expected);
+            playerController.TakeDamage(expected);
         }
         catch { }
         var actual = playerModel.Health + playerModel.Armor;
@@ -53,7 +53,7 @@ public class PlayerModelTests
         var oldValue = playerModel.Health / 2;
         try
         {
-            playerController.TakeDamage(Vector3.zero, oldValue); 
+            playerController.TakeDamage(oldValue); 
         }
         catch { }
         playerController.TakeHealth(1);

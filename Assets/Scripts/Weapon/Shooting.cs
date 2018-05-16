@@ -21,6 +21,8 @@ public class Shooting : MonoBehaviour
     private LineRenderer gunLine;
     private Light gunLight;
     private float effectsDisplayTime = 0.2f;
+    private AudioSource gunShootSound;
+    private AudioSource gunReloadSound;
 
     public event Action<float, float> OnStateChanged;
 
@@ -32,6 +34,8 @@ public class Shooting : MonoBehaviour
         gunLine = GetComponentInChildren<LineRenderer>();
         gunLight = GetComponentInChildren<Light>();
         magazineCapacity = gunProperties.Magazine;
+        gunShootSound = GetComponentsInChildren<AudioSource>()[0];
+        gunReloadSound = GetComponentsInChildren<AudioSource>()[1];
         ammo = gunProperties.Ammo;
         ReloadAmmo();
     }
@@ -87,24 +91,28 @@ public class Shooting : MonoBehaviour
         }
         isReloading = true;
         reloadTimer = reloadTime;
+        gunReloadSound.Play();
     }
 
     private bool AllowShooting()
     {
         if (currentMagazine > 0)
+        {
+            currentMagazine--;
             return true;
+        }
         ReloadAmmo();
         return false;
     }
 
     private void Shoot()
     {
-        currentMagazine--;
-        OnStateChanged?.Invoke(currentMagazine, ammo);
+        gunParticles.Stop();
         if (!AllowShooting())
             return;
+        gunShootSound.Play();
+        OnStateChanged?.Invoke(currentMagazine, ammo);
         gunLight.enabled = true;
-        gunParticles.Stop();
         gunParticles.Play();
         gunLine.enabled = true;
         gunLine.SetPosition(0, transform.position);
@@ -123,5 +131,7 @@ public class Shooting : MonoBehaviour
         }
         else
             gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
+        if (currentMagazine <= 0)
+            ReloadAmmo();
     }
 }

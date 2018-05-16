@@ -9,7 +9,7 @@ public class Lava : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             var playerController = other.GetComponent<PlayerController>();
-            playerController.TakeDamage(transform.position, float.MaxValue);
+            playerController.TakeDamage(float.MaxValue);
         }
     }
 }

@@ -33,11 +33,13 @@ public class Drop : MonoBehaviour
             if (isArmor && gameModel.MainPlayer.Armor != gameModel.MainPlayer.MaxArmor)
             {
                 playerController.TakeArmor(Points);
+                gameModel.PlayArmor();
                 Destroy(gameObject);
             }
             else if (isHeal && gameModel.MainPlayer.Health != gameModel.MainPlayer.MaxHealth)
             {
                 playerController.TakeHealth(Points);
+                gameModel.PlayHeal();
                 Destroy(gameObject);
             }
         }

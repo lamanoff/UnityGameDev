@@ -24,7 +24,11 @@ public class GameModel : MonoBehaviour
     public PlayerModel MainPlayer { get; private set; }
     public Dictionary<int, EnemyModel> Enemies = new Dictionary<int, EnemyModel>();
     public List<GameObject> AvailableDrop = new List<GameObject>();
+    public AudioClip HealthDropClip;
+    public AudioClip ArmorDropClip;
+    public AudioClip LvlUpClip;
     private GameObject[] spawners;
+    private AudioSource audioSource;
     private List<int> usedIds = new List<int>();
     public float Experience { get; private set; }
     public float ExpToLevelUp { get; private set; }
@@ -32,6 +36,7 @@ public class GameModel : MonoBehaviour
 
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         var player = GameObject.FindGameObjectWithTag("Player");
         MainPlayer = new PlayerModel(player);
         MainPlayer.OnStateChanged += StopGame;
@@ -40,6 +45,24 @@ public class GameModel : MonoBehaviour
         foreach (var spawner in spawners)
             spawner.GetComponent<Spawner>().OnSpawn += AddEnemy;
         CheckForUpLevel();
+    }
+
+    public void PlayHeal()
+    {
+        if (HealthDropClip != null)
+        {
+            audioSource.clip = HealthDropClip;
+            audioSource.Play();
+        }
+    }
+
+    public void PlayArmor()
+    {
+        if (ArmorDropClip != null)
+        {
+            audioSource.clip = ArmorDropClip;
+            audioSource.Play();
+        }
     }
 
     private void StopGame()
@@ -60,6 +83,11 @@ public class GameModel : MonoBehaviour
     {
         if (Experience > ExpToLevelUp)
         {
+            if (LvlUpClip != null)
+            {
+                audioSource.clip = LvlUpClip;
+                audioSource.Play();
+            }
             LastExpMargin = ExpToLevelUp;
             MainPlayer.LevelUp();
             UpSpawnersLevel();

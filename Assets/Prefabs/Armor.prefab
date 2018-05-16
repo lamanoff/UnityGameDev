@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99ad025ff937f5e4886ccffd062028f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Points: 70
+  Points: 25
   Lifetime: 20
   dropType: 1
 --- !u!135 &135591540464352510
