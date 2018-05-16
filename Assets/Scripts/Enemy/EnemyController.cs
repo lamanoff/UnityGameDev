@@ -62,7 +62,11 @@ public class EnemyController : MonoBehaviour
     private void Attack()
     {
         if (attackTimer > 0)
+        {
+            animator.SetBool("Attack", false);
             return;
+        }
+        animator.SetBool("Attack", true);
         var currentDeviation = Damage / DamageDeviationRatio;
         var damage = Damage + UnityEngine.Random.Range(-currentDeviation, currentDeviation);
         if (rangeAttack == null)
@@ -74,7 +78,7 @@ public class EnemyController : MonoBehaviour
 
     private void SetDestination()
     {
-        if (rangeAttack == null) 
+        if (rangeAttack == null)
             agent.SetDestination(target.transform.position);
         else
         {
@@ -103,12 +107,7 @@ public class EnemyController : MonoBehaviour
         if (target == null)
             return;
         if (allowAttack)
-        {
-            animator.SetBool("Attack", true);
-            Attack();
-        }
-        else
-            animator.SetBool("Attack", false);
+            Attack();  
         SetDestination();
     }
 }

@@ -37,7 +37,7 @@ public class Shooting : MonoBehaviour
         gunShootSound = GetComponentsInChildren<AudioSource>()[0];
         gunReloadSound = GetComponentsInChildren<AudioSource>()[1];
         ammo = gunProperties.Ammo;
-        ReloadAmmo();
+        currentMagazine = magazineCapacity;
     }
 
     void Update()
@@ -52,13 +52,13 @@ public class Shooting : MonoBehaviour
         if (reloadTimer > 0)
         {
             reloadTimer -= Time.deltaTime;
-            return;
-        } else if (isReloading)
+        }
+        else if (isReloading)
         {
             isReloading = false;
             OnStateChanged?.Invoke(currentMagazine, ammo);
         }
-        if (playerController.AllowShooting && timer >= timeBetweenBullets && Time.timeScale != 0)
+        else if (playerController.AllowShooting && timer >= timeBetweenBullets && Time.timeScale != 0)
         {
             timer = 0f;
             Shoot();
@@ -76,9 +76,11 @@ public class Shooting : MonoBehaviour
 
     private void ReloadAmmo()
     {
-        if (ammo == 0)
+        if (ammo == 0 || reloadTimer > 0)
             return;
         var delta = magazineCapacity - currentMagazine;
+        if (delta == 0)
+            return;
         if (ammo >= delta)
         {
             currentMagazine = magazineCapacity;
@@ -92,6 +94,7 @@ public class Shooting : MonoBehaviour
         isReloading = true;
         reloadTimer = reloadTime;
         gunReloadSound.Play();
+        OnStateChanged?.Invoke(currentMagazine, ammo);
     }
 
     private bool AllowShooting()

@@ -487,7 +487,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 81051dd4188577047901daf0647c84d4, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -887,7 +887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d517958254ac2d14d8eecb7f5dfccdff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Frequency: 0.15
+  Frequency: 0.1
   Damage: 20
   Range: 5000
   Magazine: 14
@@ -28095,7 +28095,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 184410309
+  randomSeed: 1147937969
   InitialModule:
     serializedVersion: 3
     enabled: 1
