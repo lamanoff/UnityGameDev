@@ -17,7 +17,7 @@ public class View : MonoBehaviour
     private bool toUpdateBars = true;
 
     private const float maxFillAmountHealth = 0.7f;
-    private const float maxFillAmountArmor = 0.3f;
+    private const float maxFillAmountArmor = 0.3f; 
 
     void Start()
     {
@@ -63,6 +63,6 @@ public class View : MonoBehaviour
     private void UpdatePlayer()
     {
         toUpdateBars = true;
-        level.text = $"Level {playerModel.Level}";  
-    }
+        level.text = $"Level {playerModel.Level}";
+    }  
 }

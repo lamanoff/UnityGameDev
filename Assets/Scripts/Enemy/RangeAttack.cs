@@ -21,7 +21,7 @@ public class RangeAttack : MonoBehaviour
         instance.GetComponent<Rigidbody>().AddForce(instance.transform.forward * 100 * velocityRatio, ForceMode.Acceleration);
         instance.transform.SetParent(transform.parent, true);
         instance.transform.localScale = Bullet.transform.localScale;
-        instance.transform.position -= new Vector3(0, 0.3f, 0);
+        instance.transform.position += new Vector3(0, 0.5f, 0);
         Destroy(instance, Lifetime);
     }
 }

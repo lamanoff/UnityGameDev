@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerModel : Creature
 {
@@ -9,6 +10,12 @@ public class PlayerModel : Creature
     public float MaxArmor { get; private set; }
     private float armor;
     private PlayerController playerController;
+
+    public float flashSpeed = 5f;                              
+    public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+    bool damaged;
+    public Image damageImage;
+
     public float Armor
     {
         get => armor;
@@ -35,6 +42,19 @@ public class PlayerModel : Creature
         playerController.GetArmor += GetArmor;
     }
 
+    void Update()
+    {
+        if (damaged)
+        {
+            damageImage.color = flashColour;
+        }
+        else
+        {
+            damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+        }
+        damaged = false;
+    }
+
     public void LevelUp()
     {
         Level++;
@@ -48,7 +68,10 @@ public class PlayerModel : Creature
     private void GetDamage(float damage)
     {
         if (State == CreatureState.Dead)
-            throw new Exception("Player is already dead!");
+        {
+            //throw new Exception("Player is already dead!");
+        }
+        damaged = true;
         var residualDamage = damage - Armor;
         Armor -= damage;
         if (residualDamage < 0)
@@ -60,7 +83,6 @@ public class PlayerModel : Creature
     private void GetHealth(float health)
     {
         if (State == CreatureState.Dead)
-            throw new Exception("Player is dead!");
         Health += health;
         OnStateChanged?.Invoke();
     }

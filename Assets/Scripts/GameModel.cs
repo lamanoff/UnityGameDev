@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum GameState
 {
@@ -33,7 +36,7 @@ public class GameModel : MonoBehaviour
     public float Experience { get; private set; }
     public float ExpToLevelUp { get; private set; }
     public float LastExpMargin { get; private set; }
-
+    
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -68,7 +71,10 @@ public class GameModel : MonoBehaviour
     private void StopGame()
     {
         if (MainPlayer.State == CreatureState.Dead)
-            Debug.Log("Game over!");
+        {
+            SceneManager.LoadScene(2);
+            // Enemies.Select(e => e.Value.Kill());
+        }
     }
 
     private void ClearEnemy(int id)

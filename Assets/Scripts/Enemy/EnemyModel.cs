@@ -27,6 +27,9 @@ public class EnemyModel : Creature
         }
     }
 
+    public void Kill()
+        => Dead();
+
     private void Drop()
     {
         if (!gameModel.AvailableDrop.Any())

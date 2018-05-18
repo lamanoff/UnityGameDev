@@ -23,6 +23,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 movement;
     private Shooting playerShooting;
     private GameModel gameModel;
+    private Animator animator;
+
+    public Texture2D cursorTexture;
+    public CursorMode cursorMode = CursorMode.Auto;
+    public Vector2 hotSpot = Vector2.zero;
 
     void Start()
     {
@@ -32,6 +37,7 @@ public class PlayerController : MonoBehaviour
         floorMask = LayerMask.GetMask("Terrain");
         playerRigidbody = GetComponent<Rigidbody>();
         playerShooting = GetComponent<Shooting>();
+        animator = GetComponent<Animator>();
         gameModel = GameObject.Find("GameModel").GetComponent<GameModel>();
     }
 
@@ -91,9 +97,12 @@ public class PlayerController : MonoBehaviour
         playerRigidbody.MovePosition(transform.position + movement);
         if (horizontal * horizontal + vertical * vertical != 0)
         {
+            animator.SetBool("Walk", true);
             if (!stepSound.isPlaying)
                 stepSound.Play();
         }
+        else
+            animator.SetBool("Walk", false);
     }
 
     private void LookAtCursor()
@@ -106,5 +115,7 @@ public class PlayerController : MonoBehaviour
             var newRotation = Quaternion.LookRotation(playerToMouse);
             playerRigidbody.MoveRotation(newRotation);
         }
-    }
+        
+       // Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
+    }   
 }
